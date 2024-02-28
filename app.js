@@ -14,7 +14,6 @@ app.use('/albums', albumRoutes);
 
 app.use('/tracks', trackRoutes);
 
-
 app.use((req, res, next) =>{
     const error = new Error('Not found')
 

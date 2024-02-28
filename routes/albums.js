@@ -6,10 +6,20 @@ const router = express.Router();
 
 const data = JSON.parse(fs.readFileSync('./twice-releases.json', 'utf8'));
 
-const albums = [];
+data.sort((a, b) => a["release_date"].localeCompare(b["release_date"]));
 
-data.forEach(element => {albums.push(element['name'])});
+const albums = data.map(getAlbumInfo);  
 
+function getAlbumInfo(album) {
+    return {
+      title: album['name'],
+      tracks: album.tracks.map(getTrackTitle),
+    };
+  }
+  
+  function getTrackTitle(track) {
+    return `${track['disc_number']}. ${track['name']}`;
+  }
 
 router.get('/', (req, res, next) =>{
 
@@ -19,11 +29,14 @@ router.get('/', (req, res, next) =>{
     
 })
 
-router.post('/', (req, res, next) =>{
-    res.status(201).json({
-        message: 'Handling POST request to /albums'
+router.get('/:albumID', (req, res, next) =>{
+
+    const id = Number(req.params.albumID);
+
+    res.status(200).json({
+        albums: albums[id]
     });
-    
-})
+
+});
 
 export default router;
