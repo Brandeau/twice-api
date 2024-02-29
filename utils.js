@@ -10,5 +10,5 @@ export function getTracksInfo(album) {
 }
   
 function getTrackTitle(track) {
-    return `${track['disc_number']}. ${track['name']}`;
-  }
+    return `${track['track_number']}. ${track['name']}`;
+}

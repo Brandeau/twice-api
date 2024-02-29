@@ -24,10 +24,13 @@ router.get('/:albumID', (req, res, next) =>{
 
     const id = Number(req.params.albumID);
 
-    res.status(200).json({
-        albums: albums[id]
-    });
-
+    if(id <= albums.length){
+        res.status(200).json({
+            album: albums[id]
+        });
+    }else{
+        next();
+    }
 });
 
 export default router;
