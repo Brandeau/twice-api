@@ -2,6 +2,8 @@ import express from "express";
 
 import fs from "node:fs";
 
+import { getAlbumInfo } from "../utils.js";
+
 const router = express.Router();
 
 const data = JSON.parse(fs.readFileSync('./twice-releases.json', 'utf8'));
@@ -9,17 +11,6 @@ const data = JSON.parse(fs.readFileSync('./twice-releases.json', 'utf8'));
 data.sort((a, b) => a["release_date"].localeCompare(b["release_date"]));
 
 const albums = data.map(getAlbumInfo);  
-
-function getAlbumInfo(album) {
-    return {
-      title: album['name'],
-      tracks: album.tracks.map(getTrackTitle),
-    };
-  }
-  
-  function getTrackTitle(track) {
-    return `${track['disc_number']}. ${track['name']}`;
-  }
 
 router.get('/', (req, res, next) =>{
 
