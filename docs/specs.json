@@ -1,0 +1,135 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "TWICE API",
+        "description": "API developed for testing purposes with data from Korean girl group TWICE",
+        "version": "1.0.0",
+        "contact": {
+            "name": "Diego Brandeau"
+        },
+        "license": {
+            "name": "UNLICENSED"
+        }
+    },
+    "servers": [
+        {
+            "description": "Local server",
+            "url": "http://localhost:{PORT}",
+            "variables": {
+                "PORT": {
+                    "default": "3000",
+                    "enum": [
+                        "3000"
+                    ]
+                }
+            }
+        }
+    ],
+    "tags":[],
+    "paths": {
+        "/albums":{
+            "get":{
+                "summary": "Get all albums by TWICE up to I GOT YOU single",
+                "responses":{
+                    "200":{
+                        "description": "Get a list of all albums",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type": "array",
+                                    "items":{
+                                        "$ref": "#/components/schemas/Album"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/tracks":{
+            "get":{
+                "summary": "Get all tracks by TWICE up to I GOT YOU single",
+                "responses":{
+                    "200":{
+                        "description": "Get a list of all tracks",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref": "#/components/schemas/Tracks"
+                                }
+                            }
+                        }
+                    }
+                }
+            }    
+        },
+        "/albums/{id}":{
+            "get":{
+                "summary": "Get an album and its tracks by ID",
+                "parameters":[
+                    {
+                      "$ref": "#/components/parameters/id"
+                      }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "Get an album and its tracks",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref": "#/components/schemas/Album"
+                                }
+                            }
+                        }
+                    }
+                }
+            }  
+        }
+    },
+    "components":{
+        "schemas":{
+            "Album":{
+                "type": "object",
+                "properties":{
+                    "title": {
+                      "type": "string"
+                    },
+                    "tracks": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                    }
+                }
+            },
+            "Tracks":{
+                "type": "array",
+                "items":{
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "CommonResourceIdentifier":{
+                "title": "CommonResourceIdentifier",
+                "description": "Numerical unique identifier for a given resource",
+                "type": "integer",
+                "minimum": 1
+            }
+        },
+        "parameters":{
+            "id":{
+                "description": "Path identifier for a resource",
+                "required": true,
+                "schema": {
+                    "$ref": "#/components/schemas/CommonResourceIdentifier"
+                },
+                "in": "path",
+                "name": "id"
+            }
+        }
+    }
+    
+}
