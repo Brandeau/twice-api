@@ -19,7 +19,11 @@ const albums = discography.map(getAlbumInfo);
  */
 const tracks = discography.map(getTracksInfo);  
 
-export { Album, albums, tracks }
+const orderedTracks = orderArray(tracks);
+
+const uniqueTracks = removeDuplicates(orderedTracks);
+
+export { Album, albums, uniqueTracks }
 
 /**
  * Gets title and track info for each album
@@ -48,7 +52,15 @@ export function getTracksInfo(album) {
  * @returns {string}
  */
 function getTrackTitle(track) {
-    return `${track['track_number']}. ${track['name']}`;
+    return track['name'];
+}
+
+function removeDuplicates(arr){
+  return arr.filter((elem, index) => arr.indexOf(elem) === index);
+}
+
+function orderArray(arr){
+  return arr.flat().sort();
 }
 
 /**
