@@ -4,6 +4,8 @@ import albumRoutes from "./routes/albums.js";
 
 import trackRoutes from "./routes/tracks.js";
 
+import membersRoutes from "./routes/members.js";
+
 import specsRoutes from "./routes/specs.js";
 
 import morgan from "morgan";
@@ -15,6 +17,8 @@ app.use(morgan('dev'));
 app.use('/albums', albumRoutes);
 
 app.use('/tracks', trackRoutes);
+
+app.use('/members', membersRoutes);
 
 app.use('/specs', specsRoutes);
 
