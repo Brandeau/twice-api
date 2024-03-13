@@ -1,5 +1,7 @@
 import * as cheerio from '@toridoriv/cheerio';
 
+import fs from 'fs';
+
 const twiceWikipediaPage = 'https://en.wikipedia.org/wiki/Twice';
 
 const membersURLs = await scrapeTwiceWikipediaPage(twiceWikipediaPage);
@@ -31,16 +33,24 @@ async function scrapeTwiceMemberIndividualWikipediaPage(url){
 
     const $ = await cheerio.fromURL(url)
 
-    //data[1] = $('.infobox-above .fn').text();
-    data['name'] = $('.nickname').text() || $('.infobox-above .fn').text();
+    data['name'] = $('.mw-content-ltr p b').first().text()
+    data['korean name'] = $('.mw-content-ltr p span[title="Korean-language text"]').first().text()
     data['birth'] = $('.infobox-data span').first().text();
     data['image'] = $('.infobox-image img').attr('src');
-    data['Korean Name'] = $('span[title="Korean-language text"]').first().text();
-    data['Kanji'] = $('span[title="Japanese-language text"]').first().text() || $('span[title="Chinese-language text"]').first().text() || 'Does not apply';
-
+    
     return data;
 
 }
 
-console.log(await Promise.all(membersURLs.map(scrapeTwiceMemberIndividualWikipediaPage)));
+const membersData = JSON.stringify(await Promise.all(membersURLs.map(scrapeTwiceMemberIndividualWikipediaPage)), null, 2)
+
+fs.writeFile('membersData.json', membersData, (err) => {
+    if (err)
+      console.log(err);
+    else {
+      console.log("File written successfully\n");
+      console.log("The written file has the following contents:");
+      console.log(fs.readFileSync("membersData.json", "utf8"));
+    }
+  })
 
