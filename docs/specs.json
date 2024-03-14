@@ -85,6 +85,48 @@
                     }
                 }
             }  
+        },
+        "/members":{
+            "get":{
+                "summary": "Get all members by TWICE",
+                "responses":{
+                    "200":{
+                        "description": "Get a list of all members",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type": "array",
+                                    "items":{
+                                        "$ref": "#/components/schemas/Member"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/members/{id}":{
+            "get":{
+                "summary": "Get an member of TWICE by ID ordered by age",
+                "parameters":[
+                    {
+                      "$ref": "#/components/parameters/id"
+                      }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "Get a member of TWICE",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref": "#/components/schemas/Member"
+                                }
+                            }
+                        }
+                    }
+                }
+            }  
         }
     },
     "components":{
@@ -108,6 +150,26 @@
                 "items":{
                     "type": "array",
                     "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Member":{
+                "type": "object",
+                "properties":{
+                    "name": {
+                      "type": "string"
+                    },
+                    "korean name": {
+                        "type": "string"
+                    },
+                    "birth": {
+                        "type": "string"
+                    },
+                    "birthplace":{
+                        "type": "string"
+                    },
+                    "image": {
                         "type": "string"
                     }
                 }
