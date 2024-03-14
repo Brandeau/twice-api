@@ -2,14 +2,21 @@ import * as cheerio from '@toridoriv/cheerio';
 
 import fs from 'fs';
 
+/**
+ * Twice Wikipedia page
+ */
 const twiceWikipediaPage = 'https://en.wikipedia.org/wiki/Twice';
 
+/**
+ * URL addresses for the Wikipedia page of each member
+ */
 const membersURLs = await scrapeTwiceWikipediaPage(twiceWikipediaPage);
 
-//const twiceMembersIndividualData = await scrapeTwiceMembersIndividualWikipediaPages();
-
+/**
+ * @param {string} url 
+ * @returns {Promise<string[]>} A promise that resolves to an array with the url of each member page
+ */
 async function scrapeTwiceWikipediaPage(url){
-    //const data = {}
 
     const data = [];
 
@@ -17,16 +24,16 @@ async function scrapeTwiceWikipediaPage(url){
 
     $('.infobox-data > ul li a').each(function(i){
 
-        //const name = $(this).text();
-
-        //data[name] = {'name': $(this).text(), 'url':$(this).attr('href')}
-
         data.push("https://en.wikipedia.org" + $(this).attr('href'));
         
     });
 return data;
 }
 
+/**
+ * @param {string} url - The URL of each member's Wikipedia page
+ * @returns {Promise<Array<{[k: string]: string}>>}
+ */
 async function scrapeTwiceMemberIndividualWikipediaPage(url){
 
     const data = {};
@@ -36,6 +43,7 @@ async function scrapeTwiceMemberIndividualWikipediaPage(url){
     data['name'] = $('.mw-content-ltr p b').first().text()
     data['korean name'] = $('.mw-content-ltr p span[title="Korean-language text"]').first().text()
     data['birth'] = $('.infobox-data span').first().text();
+    data['birthplace'] = $('.birthplace').text() || $('a[title=Gangdong-gu]').text();
     data['image'] = $('.infobox-image img').attr('src');
     
     return data;
