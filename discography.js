@@ -21,7 +21,7 @@ const tracks = discography.map(getTracksInfo);
 
 const orderedTracks = orderArray(tracks);
 
-const uniqueTracks = removeDuplicates(orderedTracks);
+const uniqueTracks = removePrimitiveDuplicates(orderedTracks);
 
 export { Album, albums, uniqueTracks, filterAlbumsByDate, discography, getAlbumInfo }
 
@@ -55,14 +55,33 @@ function getTrackTitle(track) {
     return track['name'];
 }
 
-function removeDuplicates(arr){
+/**
+ * Remove duplicate primitive elements from array
+ * 
+ * @param {Array<string | number | boolean>} arr 
+ * @returns {Array<string | number | boolean>}
+ */
+function removePrimitiveDuplicates(arr){
   return arr.filter((elem, index) => arr.indexOf(elem) === index);
 }
 
+/**
+ * Flattens an array and then sorts it in ascending order
+ * 
+ * @param {Array} arr 
+ * @returns {Array}
+ */
 function orderArray(arr){
   return arr.flat().sort();
 }
 
+/**
+ * 
+ * @param {Array} data - array with Twice albums
+ * @param {string} start_date - start date to use as lower limit for the filter
+ * @param {string} end_date - end date to use as upper limit for the filter
+ * @returns {Array}
+ */
 function filterAlbumsByDate(data, start_date, end_date){
   return data.filter(item => item['release_date'] >= start_date && item['release_date'] <= end_date)
 }

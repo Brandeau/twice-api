@@ -190,6 +190,24 @@
                 },
                 "in": "path",
                 "name": "id"
+            },
+            "start-date":{
+                "description": "The start date to filter albums from",
+                "required": false,
+                "schema":{
+                    "type": "string"
+                },
+                "in": "query",
+                "name": "start-date"
+            },
+            "end-date":{
+                "description": "The end date to filter the albums up to",
+                "required": false,
+                "schema":{
+                    "type": "string"
+                },
+                "in": "query",
+                "name": "end-date"
             }
         }
     }
