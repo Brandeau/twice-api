@@ -23,14 +23,14 @@ const orderedTracks = orderArray(tracks);
 
 const uniqueTracks = removeDuplicates(orderedTracks);
 
-export { Album, albums, uniqueTracks }
+export { Album, albums, uniqueTracks, filterAlbumsByDate, discography, getAlbumInfo }
 
 /**
  * Gets title and track info for each album
  * @param {Album} album 
  * @returns
  */
-export function getAlbumInfo(album) {
+function getAlbumInfo(album) {
     return {
       title: album['name'],
       tracks: album.tracks.map(getTrackTitle),
@@ -42,7 +42,7 @@ export function getAlbumInfo(album) {
  * @param {Album} album 
  * @returns {string[]}
  */
-export function getTracksInfo(album) {
+function getTracksInfo(album) {
     return album.tracks.map(getTrackTitle);
 }
 
@@ -61,6 +61,10 @@ function removeDuplicates(arr){
 
 function orderArray(arr){
   return arr.flat().sort();
+}
+
+function filterAlbumsByDate(data, start_date, end_date){
+  return data.filter(item => item['release_date'] >= start_date && item['release_date'] <= end_date)
 }
 
 /**
